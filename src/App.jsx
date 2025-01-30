@@ -8,7 +8,11 @@ function App() {
                   {qText:'What is the purpose of React? 2', qID: "Purpose 3", aType:'text-area'},
                 ];
 
+<<<<<<< HEAD
   const selObj = {table: "Rekening", SO: {selectKeys: [], where: ""}};
+=======
+  const selObj = {table: "Transaksi", SO: {selectKeys: [], where: ""}};
+>>>>>>> bc9f799537176c3b6e0379f74cd085f6ebc18d86
 
   return (
     <TableView selectObject={selObj}/>
