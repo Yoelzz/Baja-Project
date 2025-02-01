@@ -9,7 +9,7 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-let tempData = { host: "127.0.0.1", user: "elz", password: "Just4jesus!", database: "test data" };
+let tempData = { host: "127.0.0.1", user: "", password: "", database: "" };
 
 function createConnection(sqlData) {
     const db = mysql.createConnection({
