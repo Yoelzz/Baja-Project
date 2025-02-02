@@ -134,11 +134,10 @@ export default function TableView({ selectObject }) {
     
     return (
       <div className="App">
-        <h1 id="TableHeader">{selectObject.table.toUpperCase()}</h1>
         <div id="search-bar">
-          <input type="text" id="search" placeholder="Search..." onKeyUp={handlewithEnter} />
-          <input type="submit" onClick={handleSearch} />  
+          <input type="text" id="search" placeholder="Filter..." onKeyUp={handlewithEnter} />
         </div>
+        <h1 id="TableHeader">{selectObject.table.toUpperCase()}</h1>
         <div id="TableView">
           {error && <p style={{ color: 'red' }}>Error: {error}</p>}
           {tableData && renderTable()}
