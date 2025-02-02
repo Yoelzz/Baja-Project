@@ -122,6 +122,12 @@ export default function TableView({ selectObject }) {
       }
     };
 
+    function handlewithEnter(event) {
+      if (event.key === "Enter") {
+        handleSearch();
+      }
+    }
+
     useEffect(() => {
       fetchData();
     }, []);
@@ -130,7 +136,7 @@ export default function TableView({ selectObject }) {
       <div className="App">
         <h1 id="TableHeader">{selectObject.table.toUpperCase()}</h1>
         <div id="search-bar">
-          <input type="text" id="search" placeholder="Search..." />
+          <input type="text" id="search" placeholder="Search..." onKeyUp={handlewithEnter} />
           <input type="submit" onClick={handleSearch} />  
         </div>
         <div id="TableView">
