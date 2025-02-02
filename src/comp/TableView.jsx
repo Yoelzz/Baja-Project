@@ -33,9 +33,6 @@ export default function TableView({ selectObject }) {
         .catch((error) => {
           setError(error.message);
           setTableData(null);
-        })
-        .finally(() => {
-          setIsFetching(false);
         });
       }
 
@@ -99,6 +96,32 @@ export default function TableView({ selectObject }) {
       );
     };
 
+    const handleSearch = () => {
+      const searchTerm = document.getElementById("search").value;
+      const tableObject = document.getElementById("TableView").childNodes[0].childNodes[1];
+
+      const foundColor = searchTerm === "" ? "white" : "#e6e6e6";
+      
+      for (let i = 0; i < tableObject.childNodes.length; i++) {
+        const rowObject = tableObject.childNodes[i];
+        let searchFound = false;
+        for (let n = 0; n < rowObject.childNodes.length; n++) {
+          const cellObject = rowObject.childNodes[n];
+          if (cellObject.innerHTML.toLowerCase().includes(searchTerm.toLowerCase())) {
+            cellObject.style.backgroundColor = foundColor;
+            searchFound = true;
+          } else {
+            cellObject.style.backgroundColor = "white";
+          }
+        }
+        if (!searchFound) {
+          rowObject.style.display = "none";
+        } else {
+          rowObject.style.display = "table-row";
+        }
+      }
+    };
+
     useEffect(() => {
       fetchData();
     }, []);
@@ -106,6 +129,10 @@ export default function TableView({ selectObject }) {
     return (
       <div className="App">
         <h1 id="TableHeader">{selectObject.table.toUpperCase()}</h1>
+        <div id="search-bar">
+          <input type="text" id="search" placeholder="Search..." />
+          <input type="submit" onClick={handleSearch} />  
+        </div>
         <div id="TableView">
           {error && <p style={{ color: 'red' }}>Error: {error}</p>}
           {tableData && renderTable()}
