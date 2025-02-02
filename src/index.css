@@ -39,7 +39,7 @@ tbody tr {
     scroll-behavior: smooth;
     border: 1px solid #ccc;
     scroll-padding-top: 40px;
-    width: max-content;
+    width: min-content;
 }
 
 #TableHeader {
