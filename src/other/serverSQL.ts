@@ -61,8 +61,9 @@ app.post("/read-sql", (req: any, res: any) => {
   const db = createConnection(tempData);
   const keys = data["selectKeys"].length == 0 ? "*" :data["selectKeys"].map((val) => `\`${val}\``).join(", ");
   const where: string = data["where"] ? ` WHERE ${data["where"]}` : "";
+  const custom: string = data["custom"] ? ` ${data["custom"]}` : "";
 
-  const query = `SELECT ${keys} FROM \`${table}\`` + where;
+  const query = `SELECT ${keys} FROM \`${table}\`` + where + custom;
 
   db.query(query, (err: string, results: any) => {
       if (err) {
