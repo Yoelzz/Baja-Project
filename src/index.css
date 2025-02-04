@@ -52,11 +52,17 @@ tbody tr {
     text-align: center;
 }
 
-#search-bar {
+#search-bar,
+#filter-bar {
     display: flex;
     justify-content: right;
     max-width: 90%;
     max-height: 80%;
+}
+
+#filter-bar input {
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 .App {
