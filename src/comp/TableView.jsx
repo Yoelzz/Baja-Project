@@ -3,11 +3,19 @@ import React, { useState, useEffect, useRef } from 'react';
 export default function TableView({ selectObject }) {
   const [tableData, setTableData] = useState(null);
   const [error, setError] = useState(null);
+  const [minfilterDate, setMinFilterDate] = useState(null);
+  const [maxfilterDate, setMaxFilterDate] = useState(null);
+  const [whereClause, setWhereClause] = useState("");
   const isFetched = useRef(false);
 
     const fetchData = () => {
       if (isFetched.current) return;
       isFetched.current = true;
+
+      if (!whereClause == "") {
+        selectObject.SO.where = whereClause;
+        selectObject.SO.custom = ""
+      }
 
       fetch("http://103.127.132.17:3000/read-sql", {
         method: "POST",
@@ -33,6 +41,9 @@ export default function TableView({ selectObject }) {
         .catch((error) => {
           setError(error.message);
           setTableData(null);
+        })
+        .finally(() => {
+          isFetched.current = false;
         });
       }
 
@@ -62,7 +73,7 @@ export default function TableView({ selectObject }) {
       if (!tableData || tableData.length === 0) {
         return <p>No data available.</p>;
       }
-  
+      
       const headers = Object.keys(tableData[0]);
       document.getElementById("TableHeader").innerHTML = selectObject.table.toUpperCase();
         
@@ -129,13 +140,30 @@ export default function TableView({ selectObject }) {
     }
 
     useEffect(() => {
+      isFetched.current = false;
       fetchData();
-    }, []);
+      document.getElementById("search").value = "";
+      handleSearch();
+    }, [whereClause]);
     
     return (
       <div className="App">
         <div id="search-bar">
           <input type="text" id="search" placeholder="Filter..." onKeyUp={handlewithEnter} />
+        </div>
+        <div id="filter-bar">
+          <input type="date" id="min-filter-date" onChange={(e) => {
+            setMinFilterDate(e.target.value);
+            if (maxfilterDate) { 
+              setWhereClause(`\`TGL INT\` BETWEEN '${e.target.value}' AND '${maxfilterDate}'`);
+            }
+          }} />
+          <input type="date" id="max-filter-date" onChange={(e) => {
+            setMaxFilterDate(e.target.value);
+            if (minfilterDate) {
+              setWhereClause(`\`TGL INT\` BETWEEN '${minfilterDate}' AND '${e.target.value}'`);
+            }
+          }} />
         </div>
         <h1 id="TableHeader">{selectObject.table.toUpperCase()}</h1>
         <div id="TableView">
