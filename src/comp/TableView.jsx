@@ -142,10 +142,15 @@ export default function TableView({ selectObject }) {
     useEffect(() => {
       isFetched.current = false;
       fetchData();
+<<<<<<< HEAD
       if (!document.getElementById("search").value == "") {
         document.getElementById("search").value = "";
         handleSearch();
       }
+=======
+      document.getElementById("search").value = "";
+      handleSearch();
+>>>>>>> 44bc1be88522029b32153440429ffec6ca28c983
     }, [whereClause]);
     
     return (
